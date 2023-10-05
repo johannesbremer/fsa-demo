@@ -26,6 +26,11 @@ function insertHandleElement(handle) {
   
   const permission = row.createElement('td');
   
+  const actionButtons = row.createElement('td');
+  const queryPermissionButton = actionButtons.createElement('button');
+  const requestPermissionButton = actionButtons.createElement('button');
+  const queryPermissionButton = actionButtons.createElement('button');
+  actionButtons.append(queryPermissionButton);
   
   const table = document.getElementById('handle-table');  
   table.appendChild(row);

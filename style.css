@@ -1,4 +1,3 @@
-
 .title {
   font-size: 24px;
   margin: 16px 4px;
@@ -9,6 +8,15 @@
   margin: 4px;
 }
 
-.handle {
+.handle-table {
   padding: 4px;
+}
+
+.handle-table tr {
+  padding: 2px 0;
+}
+
+.handle-table th,
+.handle-table td {
+  padding: 0 12px;  
 }
