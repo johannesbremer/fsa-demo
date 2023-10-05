@@ -69,3 +69,8 @@ input {
   padding: 2px;
   margin: 0 4px 0 0;
 }
+
+.read-state, .readwrite-state {
+  display: inline-block;
+  min-width: 68px;
+}

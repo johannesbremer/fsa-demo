@@ -43,8 +43,8 @@ function addRow(handle) {
   row.append(handleType);
   
   const readPermission = document.createElement('td');
-  addButton(readPermission, 'Query', handleKey, handleQueryPermissionClick.bind(null, 'read'));
-  addButton(readPermission, 'Request', handleKey, handleRequestPermissionClick.bind(null, 'read'));
+  addButton(readPermission, 'Query', handleKey, handlePermissionButtonClick.bind(null, 'read', true));
+  addButton(readPermission, 'Request', handleKey, handlePermissionButtonClick.bind(null, 'read', false));
   const readPermissionState = document.createElement('span');
   readPermissionState.classList.add('read-state');
   readPermissionState.innerText = '-----';
@@ -52,8 +52,8 @@ function addRow(handle) {
   row.append(readPermission);
   
   const readWritePermission = document.createElement('td');
-  addButton(readWritePermission, 'Query', handleKey, handleQueryPermissionClick.bind(null, 'readwrite'));
-  addButton(readWritePermission, 'Request', handleKey, handleRequestPermissionClick.bind(null, 'readwrite'));
+  addButton(readWritePermission, 'Query', handleKey, handlePermissionButtonClick.bind(null, 'readwrite', true));
+  addButton(readWritePermission, 'Request', handleKey, handlePermissionButtonClick.bind(null, 'readwrite', false));
   const readWritePermissionState = document.createElement('span');
   readWritePermissionState.classList.add('readwrite-state');
   readWritePermissionState.innerText = '-----';
@@ -85,7 +85,7 @@ function generateHandleKey(handle) {
   return handle.name;
 };
 
-async function handleQueryPermissionClick(accessType, event) {
+async function handlePermissionButtonClick(accessType, queryOnly, event) {
   if (!event.target) {
     return;
   }
@@ -97,33 +97,13 @@ async function handleQueryPermissionClick(accessType, event) {
     return;
   }
   
-  const result = await handle.queryPermission({mode: accessType});
+  const result = await (queryOnly ? handle.queryPermission({mode: accessType}) : handle.requestPermission({mode: accessType}));
   console.log('queryPermission() returned "' + result + '"');
   
   // Update the permission state label.
   const rowElem = document.getElementById(handleKey);
-  const stateElem = rowElem.getElementsByClassName('read-state');
-  stateElem.innerText = result;
-};
-
-async function handleRequestPermissionClick(accessType, event) {
-  if (!event.target) {
-    return;
-  }
-  const handleKey = event.target.getAttribute('handleKey');
-  const handle = handleMap.get(handleKey);
-  if (!handle) {
-    console.log('Failed to find a handle');
-    return;
-  }
-  
-  const result = await handle.requestPermission({mode: accessType});
-  console.log('requestPermission() returned "' + result + '"');
-  
-  // Update the permission state label.
-  const rowElem = document.getElementById(handleKey);
-  const stateElem = rowElem.getElementsByClassName('readwrite-state');
-  stateElem.innerText = result;
+  const stateElems = rowElem.getElementsByClassName(accessType == 'read' ? 'read-state' : 'readwrite-state');
+  stateElems[0].innerText = result;
 };
 
 function handleSaveToIndexedDB(event) {
