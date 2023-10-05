@@ -68,4 +68,13 @@ function addRow(handle) {
   table.appendChild(row);
 };
 
-function create
+function createButton(parentElem, name, onClickHandler) {
+  const buttonElem = document.createElement('button');
+  buttonElem.innerText = name;
+  buttonElem.addEventListener('click', onClickHandler);
+  parentElem.append(buttonElem);
+};
+
+function handleQueryPermissionClick() {
+  
+};
