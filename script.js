@@ -62,6 +62,9 @@ function addRow(handle) {
   
   const table = document.getElementById('handle-table'); 
   table.appendChild(row);
+  
+  // Update model.
+  // handleMap.add();
 };
 
 function addButton(parentElem, name, onClickHandler) {
@@ -75,18 +78,18 @@ function updatePermissionState() {
   
 }
 
-function handleQueryPermissionClick(accessType) {
+function handleQueryPermissionClick(accessType, event) {
+  //handleMap.get
+};
+
+function handleRequestPermissionClick(accessType, event) {
   
 };
 
-function handleRequestPermissionClick(accessType) {
+function handleSaveToIndexedDB(event) {
   
 };
 
-function handleSaveToIndexedDB() {
-  
-};
-
-function handleRemoveFromIndexedDB() {
+function handleRemoveFromIndexedDB(event) {
   
 };
