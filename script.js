@@ -1,3 +1,5 @@
+import {get, set} from 'https://unpkg.com/idb-keyval@5.0.2/dist/esm/index.js';
+
 const handleMap = new Map();
 
 async function openFilePicker() {
@@ -115,7 +117,18 @@ async function handlePermissionButtonClick(accessType, queryOnly, event) {
 };
 
 function handleSaveToIndexedDB(event) {
+  if (!event.target) {
+    return;
+  }
   
+  const handleKey = event.target.getAttribute('handleKey');
+  const handle = handleMap.get(handleKey);
+  if (!handle) {
+    console.log('Failed to find a handle');
+    return;
+  }
+  
+  await set('file', fileHandle);
 };
 
 function handleRemoveFromIndexedDB(event) {
