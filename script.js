@@ -2,17 +2,17 @@ const handleMap = new Map();
 
 async function openFilePicker() {
   const fileHandles = await window.showOpenFilePicker({});
-  insertHandleElement(fileHandles[0]);
+  addRow(fileHandles[0]);
 };
 
 async function saveFilePicker() {
   const fileHandles = await window.showSaveFilePicker();
-  insertHandleElement(fileHandles[0]);
+  addRow(fileHandles[0]);
 };
 
 async function directoryPicker() {
   const dirHandle = await window.showDirectoryPicker();
-  insertHandleElement(dirHandle);
+  addRow(dirHandle);
 };
 
 async function loadFromIndexedDB() {
@@ -20,7 +20,7 @@ async function loadFromIndexedDB() {
   
 };
 
-function insertHandleElement(handle) {
+function addRow(handle) {
   const row = document.createElement('tr');
   
   const handleName = document.createElement('td');
@@ -67,3 +67,5 @@ function insertHandleElement(handle) {
   const table = document.getElementById('handle-table'); 
   table.appendChild(row);
 };
+
+function create

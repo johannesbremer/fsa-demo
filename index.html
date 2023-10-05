@@ -13,22 +13,21 @@
       File System Access API
     </div>
     <div>
-      <button class="button" onclick="openFilePicker()">
+      <button class="main-button" onclick="openFilePicker()">
         Open File
       </button>
-      <button class="button" onclick="saveFilePicker()">
+      <button class="main-button" onclick="saveFilePicker()">
         Save File
       </button>
-      <button class="button" onclick="directoryPicker()">
+      <button class="main-button" onclick="directoryPicker()">
         Open Directory
       </button>
-      <button class="button" onclick="loadFromIndexedDB()">
+      <button class="main-button" onclick="loadFromIndexedDB()">
         Load from IndexedDB
       </button>
     </div>
-    <hr/>
     <table id="handle-table" class="handle-table">
-      <tr>
+      <tr id="handle-table-header">
         <th>Name</th>
         <th>Type</th>
         <th>Read Access</th>
