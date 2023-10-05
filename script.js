@@ -18,19 +18,33 @@ async function directoryPicker() {
 function insertHandleElement(handle) {
   const row = document.createElement('tr');
   
-  const handleName = row.createElement('td');
+  const handleName = document.createElement('td');
   handleName.innerText = handle.name;
+  row.append(handleName);
   
-  const handleType = row.createElement('td');
-  handleType.innerText = handle.kind
+  const handleType = document.createElement('td');
+  handleType.innerText = handle.kind;
+  row.append(handleType);
   
-  const permission = row.createElement('td');
+  const permission = document.createElement('td');
+  permission.innerText = '-';
+  row.append(permission);
   
-  const actionButtons = row.createElement('td');
-  const queryPermissionButton = actionButtons.createElement('button');
-  const requestPermissionButton = actionButtons.createElement('button');
-  const queryPermissionButton = actionButtons.createElement('button');
-  actionButtons.append(queryPermissionButton);
+  const actionButtons = document.createElement('td');
+  const queryReadPermissionButton = document.createElement('button');
+  queryReadPermissionButton.innerText = "Query Read Access";
+  const queryReadWritePermissionButton = document.createElement('button');
+  queryReadWritePermissionButton.innerText = "Query ReadWrite Access";
+  const requestReadPermissionButton = document.createElement('button');
+  requestReadPermissionButton.innerText = "Request Read Access";
+  const requestReadWritePermissionButton = document.createElement('button');
+  requestReadWritePermissionButton.innerText = "Request ReadWrite Access";
+  
+  actionButtons.append(queryReadPermissionButton);
+  actionButtons.append(queryReadWritePermissionButton);
+  actionButtons.append(requestReadPermissionButton);
+  actionButtons.append(requestReadWritePermissionButton);
+  row.append(actionButtons);
   
   const table = document.getElementById('handle-table');  
   table.appendChild(row);

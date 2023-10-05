@@ -12,11 +12,7 @@
   padding: 4px;
 }
 
-.handle-table tr {
-  padding: 2px 0;
-}
-
 .handle-table th,
 .handle-table td {
-  padding: 0 12px;  
+  padding: 8px 12px;  
 }
