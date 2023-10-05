@@ -116,7 +116,7 @@ async function handlePermissionButtonClick(accessType, queryOnly, event) {
   stateElems[0].innerText = result;
 };
 
-function handleSaveToIndexedDB(event) {
+async function handleSaveToIndexedDB(event) {
   if (!event.target) {
     return;
   }
@@ -128,7 +128,8 @@ function handleSaveToIndexedDB(event) {
     return;
   }
   
-  await set('file', fileHandle);
+  // Save to Indexed DB.
+  await set(handleKey, handle);
 };
 
 function handleRemoveFromIndexedDB(event) {
