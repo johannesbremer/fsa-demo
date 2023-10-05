@@ -1,4 +1,4 @@
-import {get, set, del} from 'https://unpkg.com/idb-keyval@5.0.2/dist/esm/index.js';
+import {entries, set, del} from 'https://unpkg.com/idb-keyval@5.0.2/dist/esm/index.js';
 
 const handleMap = new Map();
 
@@ -21,10 +21,23 @@ async function directoryPicker() {
 };
 
 async function loadFromIndexedDB() {
-  
+  var entries;
+  try {
+    entries = this.entries();
+  } catch (e) {
+    console.log("Error loading from Indexed DB: " + e.message);
+    return;
+  }
   
   showHeader();
-  
+  for (var entry in entries) {
+    const key = entry[0];
+    if (document.getElementById(key)) {
+      // A row for this handle already exists.
+      continue;
+    }
+    addRow(entry[1]);
+  }
 };
 
 function showHeader() {
@@ -33,7 +46,13 @@ function showHeader() {
 }
 
 function addRow(handle) {
+  // TODO: remove existing row
+  
   const handleKey = generateHandleKey(handle);
+  if (document.GetElementById(handleKey)) {
+    // A row for this handle already exists.
+    return;
+  }
   
   const row = document.createElement('tr');
   row.id = handleKey;
