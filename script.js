@@ -2,23 +2,31 @@ const handleMap = new Map();
 
 async function openFilePicker() {
   const fileHandles = await window.showOpenFilePicker({});
+  showHeader();
   addRow(fileHandles[0]);
 };
 
 async function saveFilePicker() {
   const fileHandles = await window.showSaveFilePicker();
+  showHeader();
   addRow(fileHandles[0]);
 };
 
 async function directoryPicker() {
   const dirHandle = await window.showDirectoryPicker();
+  showHeader();
   addRow(dirHandle);
 };
 
 async function loadFromIndexedDB() {
-  
-  
+  showHeader();
+  // TODO
 };
+
+function showHeader() {
+  const header = document.getElementById('handle-table-header');
+  header.classList.remove('hidden');
+}
 
 function addRow(handle) {
   const row = document.createElement('tr');
@@ -44,6 +52,8 @@ function addRow(handle) {
   row.append(readPermission);
   
   const readWritePermission = document.createElement('td');
+  addButton(readWritePermission, 'Query', handleQueryPermissionClick);
+  
   const queryReadWritePermissionButton = document.createElement('button');
   queryReadWritePermissionButton.innerText = 'Query';
   const requestReadWritePermissionButton = document.createElement('button');
@@ -68,13 +78,17 @@ function addRow(handle) {
   table.appendChild(row);
 };
 
-function createButton(parentElem, name, onClickHandler) {
+function addButton(parentElem, name, onClickHandler) {
   const buttonElem = document.createElement('button');
   buttonElem.innerText = name;
   buttonElem.addEventListener('click', onClickHandler);
   parentElem.append(buttonElem);
 };
 
-function handleQueryPermissionClick() {
+function handleQueryPermissionClick(accessType) {
+  
+};
+
+function handleRequestPermissionClick(accessType) {
   
 };
