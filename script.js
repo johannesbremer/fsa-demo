@@ -130,11 +130,12 @@ async function handleSaveToIndexedDB(event) {
   
   // Save to Indexed DB.
   try {
-  await set(handleKey, handle);
-  console.log('Saved to Indexed DB');
+    await set(handleKey, handle);
+    console.log('Saved handle "' + handle.name + '" to Indexed DB');
   } catch (e) {
-    consoloe.log('Erro')
+    console.log('Error saving handle "' + handle.name + '" to Indexed DB: ' + e.message);
   }
+  
 };
 
 function handleRemoveFromIndexedDB(event) {
