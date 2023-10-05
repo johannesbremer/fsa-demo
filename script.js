@@ -1,4 +1,4 @@
-import {get, set} from 'https://unpkg.com/idb-keyval@5.0.2/dist/esm/index.js';
+import {get, set, del} from 'https://unpkg.com/idb-keyval@5.0.2/dist/esm/index.js';
 
 const handleMap = new Map();
 
@@ -21,8 +21,10 @@ async function directoryPicker() {
 };
 
 async function loadFromIndexedDB() {
+  
+  
   showHeader();
-  // TODO
+  
 };
 
 function showHeader() {
@@ -135,9 +137,25 @@ async function handleSaveToIndexedDB(event) {
   } catch (e) {
     console.log('Error saving handle "' + handle.name + '" to Indexed DB: ' + e.message);
   }
-  
 };
 
-function handleRemoveFromIndexedDB(event) {
+async function handleRemoveFromIndexedDB(event) {
+  if (!event.target) {
+    return;
+  }
   
+  const handleKey = event.target.getAttribute('handleKey');
+  const handle = handleMap.get(handleKey);
+  if (!handle) {
+    console.log('Failed to find a handle');
+    return;
+  }
+  
+  // Save to Indexed DB.
+  try {
+    await del(handleKey);
+    console.log('Removed handle "' + handle.name + '" from Indexed DB');
+  } catch (e) {
+    console.log('Error removing handle "' + handle.name + '" from Indexed DB: ' + e.message);
+  }
 };
