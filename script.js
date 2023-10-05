@@ -21,7 +21,7 @@ async function directoryPicker() {
 async function loadFromIndexedDB() {
   var entries;
   try {
-    entries = this.entries();
+    entries = await this.entries();
   } catch (e) {
     console.log("Error loading from Indexed DB: " + e.message);
     return;
@@ -79,8 +79,8 @@ function addRow(handle) {
   row.append(readWritePermission);
   
   const indexedDB = document.createElement('td');
-  addButton(indexedDB, 'Save', handleSaveToIndexedDB);
-  addButton(indexedDB, 'Remove', handleRemoveFromIndexedDB);
+  addButton(indexedDB, 'Save', handleSaveToIndexedDB.bind(null));
+  addButton(indexedDB, 'Remove', handleRemoveFromIndexedDB.bind(null));
   row.append(indexedDB);
   
   const table = document.getElementById('handle-table'); 
@@ -172,6 +172,7 @@ async function handleRemoveFromIndexedDB(event) {
 
 /**
  * Indexed DB
+ * From https://unpkg.com/idb-keyval@5.0.2/dist/esm/index.js
  */
 function promisifyRequest(request) {
     return new Promise((resolve, reject) => {
