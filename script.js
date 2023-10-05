@@ -15,6 +15,11 @@ async function directoryPicker() {
   insertHandleElement(dirHandle);
 };
 
+async function loadFromIndexedDB() {
+  
+  
+};
+
 function insertHandleElement(handle) {
   const row = document.createElement('tr');
   
