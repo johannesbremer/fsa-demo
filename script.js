@@ -87,7 +87,9 @@ function addButton(parentElem, name, handleKey, onClickHandler) {
 };
 
 function generateHandleKey(handle) {
-  // TODO(dslee): generate unique name
+  if (handleMap.contains(handle.name)) {
+    return handle.name +""
+  }
   return handle.name;
 };
 
@@ -130,6 +132,7 @@ async function handleSaveToIndexedDB(event) {
   
   // Save to Indexed DB.
   await set(handleKey, handle);
+  console.log('Saved to Indexed DB');
 };
 
 function handleRemoveFromIndexedDB(event) {
