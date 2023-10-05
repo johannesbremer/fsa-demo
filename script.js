@@ -64,6 +64,7 @@ function addRow(handle) {
   table.appendChild(row);
   
   // Update model.
+  row.id = generateHandleKey(handle);
   // handleMap.add();
 };
 
