@@ -65,7 +65,7 @@ function addRow(handle) {
   
   // Update model.
   row.id = generateHandleKey(handle);
-  // handleMap.add();
+  handleMap.add(row.id, handle);
 };
 
 function addButton(parentElem, name, onClickHandler) {
