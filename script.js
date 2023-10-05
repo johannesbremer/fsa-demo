@@ -40,38 +40,24 @@ function addRow(handle) {
   row.append(handleType);
   
   const readPermission = document.createElement('td');
-  const queryReadPermissionButton = document.createElement('button');
-  queryReadPermissionButton.innerText = 'Query';
-  const requestReadPermissionButton = document.createElement('button');
-  requestReadPermissionButton.innerText = 'Request';
+  addButton(readPermission, 'Query', handleQueryPermissionClick.bind(null, 'read'));
+  addButton(readPermission, 'Request', handleRequestPermissionClick.bind(null, 'read'));
   const readPermissionState = document.createElement('span');
-  readPermissionState.innerText = '-';
-  readPermission.append(queryReadPermissionButton);
-  readPermission.append(requestReadPermissionButton);
+  readPermissionState.innerText = '   -   ';
   readPermission.append(readPermissionState);
   row.append(readPermission);
   
   const readWritePermission = document.createElement('td');
-  addButton(readWritePermission, 'Query', handleQueryPermissionClick);
-  
-  const queryReadWritePermissionButton = document.createElement('button');
-  queryReadWritePermissionButton.innerText = 'Query';
-  const requestReadWritePermissionButton = document.createElement('button');
-  requestReadWritePermissionButton.innerText = 'Request';
+  addButton(readWritePermission, 'Query', handleQueryPermissionClick.bind(null, 'readwrite'));
+  addButton(readWritePermission, 'Request', handleRequestPermissionClick.bind(null, 'readwrite'));
   const readWritePermissionState = document.createElement('span');
   readWritePermissionState.innerText = '   -   ';
-  readWritePermission.append(queryReadWritePermissionButton);
-  readWritePermission.append(requestReadWritePermissionButton);
   readWritePermission.append(readWritePermissionState);
   row.append(readWritePermission);
   
   const indexedDB = document.createElement('td');
-  const saveButton = document.createElement('button');
-  saveButton.innerText = 'Save';
-  const removeButton = document.createElement('button');
-  removeButton.innerText = 'Remove';
-  indexedDB.append(saveButton);
-  indexedDB.append(removeButton);
+  addButton(indexedDB, 'Save', handleSaveToIndexedDB);
+  addButton(indexedDB, 'Remove', handleRemoveFromIndexedDB);
   row.append(indexedDB);
   
   const table = document.getElementById('handle-table'); 
@@ -90,5 +76,13 @@ function handleQueryPermissionClick(accessType) {
 };
 
 function handleRequestPermissionClick(accessType) {
+  
+};
+
+function handleSaveToIndexedDB() {
+  
+};
+
+function handleRemoveFromIndexedDB() {
   
 };
