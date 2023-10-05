@@ -28,8 +28,8 @@ async function loadFromIndexedDB() {
   }
   
   showHeader();
-  for (var entry in entries) {
-    addRow(entry[1]);
+  for (var i = 0; i < entries.length; i++) {
+    addRow(entries[i][1]);
   }
 };
 
@@ -79,8 +79,8 @@ function addRow(handle) {
   row.append(readWritePermission);
   
   const indexedDB = document.createElement('td');
-  addButton(indexedDB, 'Save', handleSaveToIndexedDB.bind(null));
-  addButton(indexedDB, 'Remove', handleRemoveFromIndexedDB.bind(null));
+  addButton(indexedDB, 'Save', handleKey, handleSaveToIndexedDB);
+  addButton(indexedDB, 'Remove', handleKey, handleRemoveFromIndexedDB);
   row.append(indexedDB);
   
   const table = document.getElementById('handle-table'); 
