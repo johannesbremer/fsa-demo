@@ -29,6 +29,8 @@ function showHeader() {
 }
 
 function addRow(handle) {
+  const handleKey = generateHandleKey(handle);
+  
   const row = document.createElement('tr');
   
   const handleName = document.createElement('td');
@@ -40,16 +42,16 @@ function addRow(handle) {
   row.append(handleType);
   
   const readPermission = document.createElement('td');
-  addButton(readPermission, 'Query', handleQueryPermissionClick.bind(null, 'read'));
-  addButton(readPermission, 'Request', handleRequestPermissionClick.bind(null, 'read'));
+  addButton(readPermission, 'Query', handleKey, handleQueryPermissionClick.bind(null, 'read'));
+  addButton(readPermission, 'Request', handleKey, handleRequestPermissionClick.bind(null, 'read'));
   const readPermissionState = document.createElement('span');
   readPermissionState.innerText = 'Status Unknown';
   readPermission.append(readPermissionState);
   row.append(readPermission);
   
   const readWritePermission = document.createElement('td');
-  addButton(readWritePermission, 'Query', handleQueryPermissionClick.bind(null, 'readwrite'));
-  addButton(readWritePermission, 'Request', handleRequestPermissionClick.bind(null, 'readwrite'));
+  addButton(readWritePermission, 'Query', handleKey, handleQueryPermissionClick.bind(null, 'readwrite'));
+  addButton(readWritePermission, 'Request', handleKey, handleRequestPermissionClick.bind(null, 'readwrite'));
   const readWritePermissionState = document.createElement('span');
   readWritePermissionState.innerText = 'Status Unknown';
   readWritePermission.append(readWritePermissionState);
@@ -64,25 +66,36 @@ function addRow(handle) {
   table.appendChild(row);
   
   // Update model.
-  row.id = generateHandleKey(handle);
   handleMap.add(row.id, handle);
 };
 
-function addButton(parentElem, name, onClickHandler) {
+function addButton(parentElem, name, handleKey, onClickHandler) {
   const buttonElem = document.createElement('button');
   buttonElem.innerText = name;
-  buttonElem.
+  buttonElem.setAttribute('handleKey', handleKey);
   buttonElem.addEventListener('click', onClickHandler);
   parentElem.append(buttonElem);
 };
 
-function updatePermissionState() {
+function updatePermissionState(handleKey, state) {
+  
+};
+
+function generateHandleKey(handle) {
   
 }
 
-function handleQueryPermissionClick(accessType, event) {
-  //handleMap.get
-  event.target
+async function handleQueryPermissionClick(accessType, event) {
+  if (event.target)
+    return;
+  const handleKey = event.target.getAttribute('handleKey');
+  const handle = handleMap.get(handleKey);
+  if (!handle) {
+    console.log("Failed to find a handle");
+    return;
+  }
+  const result = await handle.queryPermission(accessType);
+  updatePermissionState(handleKey, result);
 };
 
 function handleRequestPermissionClick(accessType, event) {
