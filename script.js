@@ -1,4 +1,4 @@
-import {entries, set, del} from 'https://unpkg.com/idb-keyval@5.0.2/dist/esm/index.js';
+import {entries, set, del} from 'indexed-db.js';
 
 const handleMap = new Map();
 
@@ -31,11 +31,6 @@ async function loadFromIndexedDB() {
   
   showHeader();
   for (var entry in entries) {
-    const key = entry[0];
-    if (document.getElementById(key)) {
-      // A row for this handle already exists.
-      continue;
-    }
     addRow(entry[1]);
   }
 };
@@ -45,9 +40,7 @@ function showHeader() {
   header.classList.remove('hidden');
 }
 
-function addRow(handle) {
-  // TODO: remove existing row
-  
+function addRow(handle) {  
   const handleKey = generateHandleKey(handle);
   if (document.GetElementById(handleKey)) {
     // A row for this handle already exists.
