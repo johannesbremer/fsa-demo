@@ -52,7 +52,7 @@ function insertHandleElement(handle) {
   
   const indexedDB = document.createElement('td');
   const saveButton = document.createElement('button');
-  saveButton.innerText = 'Save to IndexedDB';
+  saveButton.innerText = 'Save';
   const removeButton = document.createElement('button');
   removeButton.innerText = 'Remove';
   indexedDB.append(saveButton);
