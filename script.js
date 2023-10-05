@@ -70,6 +70,7 @@ function addRow(handle) {
 function addButton(parentElem, name, onClickHandler) {
   const buttonElem = document.createElement('button');
   buttonElem.innerText = name;
+  buttonElem.
   buttonElem.addEventListener('click', onClickHandler);
   parentElem.append(buttonElem);
 };
@@ -80,6 +81,7 @@ function updatePermissionState() {
 
 function handleQueryPermissionClick(accessType, event) {
   //handleMap.get
+  event.target
 };
 
 function handleRequestPermissionClick(accessType, event) {
