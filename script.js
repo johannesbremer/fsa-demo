@@ -87,9 +87,7 @@ function addButton(parentElem, name, handleKey, onClickHandler) {
 };
 
 function generateHandleKey(handle) {
-  if (handleMap.contains(handle.name)) {
-    return handle.name +""
-  }
+  // Return unique ID.
   return handle.name;
 };
 
@@ -131,8 +129,12 @@ async function handleSaveToIndexedDB(event) {
   }
   
   // Save to Indexed DB.
+  try {
   await set(handleKey, handle);
   console.log('Saved to Indexed DB');
+  } catch (e) {
+    consoloe.log('Erro')
+  }
 };
 
 function handleRemoveFromIndexedDB(event) {
