@@ -1,4 +1,4 @@
-
+const handleMap = new Map();
 
 async function openFilePicker() {
   const fileHandles = await window.showOpenFilePicker({});
@@ -15,7 +15,18 @@ async function directoryPicker() {
   insertHandleElement(dirHandle);
 };
 
-function insertHandleElement() {
-  const containerElem = document.getElementById('handle-container');
+function insertHandleElement(handle) {
+  const row = document.createElement('tr');
   
+  const handleName = row.createElement('td');
+  handleName.innerText = handle.name;
+  
+  const handleType = row.createElement('td');
+  handleType.innerText = handle.kind
+  
+  const permission = row.createElement('td');
+  
+  
+  const table = document.getElementById('handle-table');  
+  table.appendChild(row);
 };
