@@ -7,13 +7,17 @@ async function openFilePicker() {
 };
 
 async function saveFilePicker() {
-  const fileHandles = await window.showSaveFilePicker();
+  const fileHandle = await window.showSaveFilePicker();
   showHeader();
-  addRow(fileHandles[0]);
+  addRow(fileHandle);
 };
 
-async function directoryPicker() {
-  const dirHandle = await window.showDirectoryPicker();
+async function directoryPicker(mode) {
+  const options = {};
+  if (mode == 'read' || mode == 'readwrite') {
+    options.mode = mode;
+  }
+  const dirHandle = await window.showDirectoryPicker(options);
   showHeader();
   addRow(dirHandle);
 };
@@ -22,6 +26,7 @@ async function loadFromIndexedDB() {
   var entries;
   try {
     entries = await this.entries();
+    console.log("Loaded handles from Indexed DB");
   } catch (e) {
     console.log("Error loading from Indexed DB: " + e.message);
     return;
