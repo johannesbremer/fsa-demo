@@ -43,7 +43,7 @@ function addRow(handle) {
   addButton(readPermission, 'Query', handleQueryPermissionClick.bind(null, 'read'));
   addButton(readPermission, 'Request', handleRequestPermissionClick.bind(null, 'read'));
   const readPermissionState = document.createElement('span');
-  readPermissionState.innerText = '   -   ';
+  readPermissionState.innerText = 'Status Unknown';
   readPermission.append(readPermissionState);
   row.append(readPermission);
   
@@ -51,7 +51,7 @@ function addRow(handle) {
   addButton(readWritePermission, 'Query', handleQueryPermissionClick.bind(null, 'readwrite'));
   addButton(readWritePermission, 'Request', handleRequestPermissionClick.bind(null, 'readwrite'));
   const readWritePermissionState = document.createElement('span');
-  readWritePermissionState.innerText = '   -   ';
+  readWritePermissionState.innerText = 'Status Unknown';
   readWritePermission.append(readWritePermissionState);
   row.append(readWritePermission);
   
@@ -70,6 +70,10 @@ function addButton(parentElem, name, onClickHandler) {
   buttonElem.addEventListener('click', onClickHandler);
   parentElem.append(buttonElem);
 };
+
+function updatePermissionState() {
+  
+}
 
 function handleQueryPermissionClick(accessType) {
   

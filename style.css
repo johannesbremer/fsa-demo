@@ -53,7 +53,11 @@ input {
 }
 
 .handle-table {
-  padding: 4px;
+  margin: 32px 0;
+}
+
+.handle-table th {
+  text-align: left;
 }
 
 .handle-table th,
@@ -62,5 +66,6 @@ input {
 }
 
 .handle-table button {
-  margin: 0 4px;
+  padding: 2px;
+  margin: 0 4px 0 0;
 }
