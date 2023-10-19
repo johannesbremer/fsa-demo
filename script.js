@@ -34,7 +34,7 @@ async function loadFromIndexedDB() {
   
   showHeader();
   for (var i = 0; i < entries.length; i++) {
-    addRow(entries[i][1]);
+    addRow(entries[i][1], true);
   }
 };
 
@@ -43,7 +43,7 @@ function showHeader() {
   header.classList.remove('hidden');
 }
 
-function addRow(handle) {  
+function addRow(handle, fromIndexedDB = false) {  
   const handleKey = generateHandleKey(handle);
   if (document.getElementById(handleKey)) {
     // A row for this handle already exists.
@@ -84,8 +84,15 @@ function addRow(handle) {
   row.append(readWritePermission);
   
   const indexedDB = document.createElement('td');
-  addButton(indexedDB, 'Save', handleKey, handleSaveToIndexedDB);
-  addButton(indexedDB, 'Remove', handleKey, handleRemoveFromIndexedDB);
+  const saveButton = addButton(indexedDB, 'Save', handleKey, handleSaveToIndexedDB);
+  const removeButton = addButton(indexedDB, 'Remove', handleKey, handleRemoveFromIndexedDB);
+  if (fromIndexedDB) {
+    
+  }
+  const indexedDBState = document.createElement('span');
+  indexedDBState.classList.add('idb-state');
+  indexedDBState.innerText = '-----';
+  indexedDB.append(indexedDBState);
   row.append(indexedDB);
   
   const table = document.getElementById('handle-table'); 
@@ -101,6 +108,7 @@ function addButton(parentElem, name, handleKey, onClickHandler) {
   buttonElem.setAttribute('handleKey', handleKey);
   buttonElem.addEventListener('click', onClickHandler);
   parentElem.append(buttonElem);
+  return buttonElem;
 };
 
 function generateHandleKey(handle) {
@@ -152,6 +160,10 @@ async function handleSaveToIndexedDB(event) {
   } catch (e) {
     console.log('Error saving handle "' + handle.name + '" to Indexed DB: ' + e.message);
   }
+  
+  const rowElem = document.getElementById(handleKey);
+  const stateElems = rowElem.getElementsByClassName('idb-state');
+  stateElems[0].innerText = "saved";
 };
 
 async function handleRemoveFromIndexedDB(event) {
@@ -166,13 +178,17 @@ async function handleRemoveFromIndexedDB(event) {
     return;
   }
   
-  // Save to Indexed DB.
+  // Remove from Indexed DB.
   try {
     await del(handleKey);
     console.log('Removed handle "' + handle.name + '" from Indexed DB');
   } catch (e) {
     console.log('Error removing handle "' + handle.name + '" from Indexed DB: ' + e.message);
   }
+  
+  const rowElem = document.getElementById(handleKey);
+  const stateElems = rowElem.getElementsByClassName('idb-state');
+  stateElems[0].innerText = "removed";
 };
 
 /**
