@@ -84,15 +84,18 @@ function addRow(handle, fromIndexedDB = false) {
   row.append(readWritePermission);
   
   const indexedDB = document.createElement('td');
-  const saveButton = addButton(indexedDB, 'Save', handleKey, handleSaveToIndexedDB);
-  const removeButton = addButton(indexedDB, 'Remove', handleKey, handleRemoveFromIndexedDB);
+  const saveButton = addButton(indexedDB, 'Save', handleKey, handleSaveToIndexedDB, 'idb-save');
+  const removeButton = addButton(indexedDB, 'Remove', handleKey, handleRemoveFromIndexedDB, 'idb-remove');
+  const idbState = document.createElement('span');
+  idbState.classList.add('idb-state');
   if (fromIndexedDB) {
-    
+    saveButton.disabled = true;
+    idbState.innerText = 'saved';
+  } else {
+    removeButton.disabled = true;
+    idbState.innerText = '-----';
   }
-  const indexedDBState = document.createElement('span');
-  indexedDBState.classList.add('idb-state');
-  indexedDBState.innerText = '-----';
-  indexedDB.append(indexedDBState);
+  indexedDB.append(idbState);
   row.append(indexedDB);
   
   const table = document.getElementById('handle-table'); 
@@ -102,12 +105,15 @@ function addRow(handle, fromIndexedDB = false) {
   handleMap.set(row.id, handle);
 };
 
-function addButton(parentElem, name, handleKey, onClickHandler) {
+function addButton(parentElem, name, handleKey, onClickHandler, classname = '') {
   const buttonElem = document.createElement('button');
   buttonElem.innerText = name;
   buttonElem.setAttribute('handleKey', handleKey);
   buttonElem.addEventListener('click', onClickHandler);
   parentElem.append(buttonElem);
+  if (classname) {
+    buttonElem.classList.add(classname);
+  }
   return buttonElem;
 };
 
@@ -159,11 +165,16 @@ async function handleSaveToIndexedDB(event) {
     console.log('Saved handle "' + handle.name + '" to Indexed DB');
   } catch (e) {
     console.log('Error saving handle "' + handle.name + '" to Indexed DB: ' + e.message);
+    return;
   }
   
   const rowElem = document.getElementById(handleKey);
-  const stateElems = rowElem.getElementsByClassName('idb-state');
-  stateElems[0].innerText = "saved";
+  const saveButton = rowElem.getElementsByClassName('idb-save');
+  const removeButton = rowElem.getElementsByClassName('idb-remove');
+  const idbState = rowElem.getElementsByClassName('idb-state');
+  saveButton[0].disabled = true;
+  removeButton[0].disabled = false;
+  idbState[0].innerText = 'saved';
 };
 
 async function handleRemoveFromIndexedDB(event) {
@@ -184,11 +195,16 @@ async function handleRemoveFromIndexedDB(event) {
     console.log('Removed handle "' + handle.name + '" from Indexed DB');
   } catch (e) {
     console.log('Error removing handle "' + handle.name + '" from Indexed DB: ' + e.message);
+    return;
   }
   
   const rowElem = document.getElementById(handleKey);
-  const stateElems = rowElem.getElementsByClassName('idb-state');
-  stateElems[0].innerText = "removed";
+  const saveButton = rowElem.getElementsByClassName('idb-save');
+  const removeButton = rowElem.getElementsByClassName('idb-remove');
+  const idbState = rowElem.getElementsByClassName('idb-state');
+  saveButton[0].disabled = false;
+  removeButton[0].disabled = true;
+  idbState[0].innerText = 'removed';
 };
 
 /**
